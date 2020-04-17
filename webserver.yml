@@ -4,7 +4,7 @@
   tasks:
   - name: install apache2
     apt: 
-      name: ['apache2', 'libapache2-mod-wsgi', 'python-pip', 'python-virtualenv']
+      name: ['apache2', 'libapache2-mod-wsgi', 'python-pip', 'python-virtualenv', 'python-mysqldb']
       state: present
       update_cache: yes
 
@@ -34,6 +34,18 @@
   - name: activate demo site
     file: src=/etc/apache2/sites-available/demo.conf dest=/etc/apache2/sites-enabled/demo.conf state=link
     notify: restart apache2
+
+  - name: ensure mysql knows lb01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.2 line="10.128.0.2 lb01" state=present
+
+  - name: ensure mysql knows app01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
+
+  - name: ensure mysql knows app02
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
+
+  - name: ensure mysql knows db01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
 
   handlers:
     - name: restart apache2

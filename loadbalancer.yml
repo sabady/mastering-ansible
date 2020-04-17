@@ -20,6 +20,15 @@
     file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
     notify: restart nginx
 
+  - name: ensure mysql knows app01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
+
+  - name: ensure mysql knows app02
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
+
+  - name: ensure mysql knows db01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
+
   handlers:
   - name: restart nginx
     service: name=nginx state=restart

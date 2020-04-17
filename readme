@@ -1,0 +1,12 @@
+ansible --list-hosts "*"
+ansible --list-hosts *
+ansible --list-hosts "*"
+ansible --list-hosts webserver
+ansible --list-hosts database:control
+ansible --list-hosts app*
+ansible --version
+ansible --list-hosts \!app*
+ansible -m ping all
+ansible -m command -a "hostname" all
+ansible -a "hostname" all
+ansible-playbook playbooks/hostname.yml

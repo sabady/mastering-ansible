@@ -10,3 +10,5 @@ ansible -m ping all
 ansible -m command -a "hostname" all
 ansible -a "hostname" all
 ansible-playbook playbooks/hostname.yml
+
+# A handler will fire only when there is a notify!

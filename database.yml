@@ -6,5 +6,6 @@
     package:
       name: mysql-server
       state: present
+      
   - name: ensure mysql-server is running
     service: name=mysql state=started enabled=yes

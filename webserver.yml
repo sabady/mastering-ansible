@@ -2,7 +2,7 @@
 - hosts: webserver
   become: true
   tasks:
-  - name: install apache2
+  - name: install what is required
     apt: 
       name: ['apache2', 'libapache2-mod-wsgi', 'python-pip', 'python-virtualenv', 'python-mysqldb']
       state: present

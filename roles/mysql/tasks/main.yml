@@ -17,7 +17,6 @@
   apt: 
     name: ['python-mysqldb']
     state: present
-    update_cache: yes
       
 - name: ensure mysql listens on all interfaces
   lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address 

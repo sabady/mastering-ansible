@@ -9,7 +9,7 @@
   lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
 
 - name: install nginx
-  apt: name=nginx state=present update_cache=yes
+  apt: name=nginx state=present
 
 - name: install tools
   apt: 

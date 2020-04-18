@@ -12,3 +12,11 @@ ansible -a "hostname" all
 ansible-playbook playbooks/hostname.yml
 
 # A handler will fire only when there is a notify!
+
+# Create roles folder tree
+mkdir roles && cd roles
+ansible-galaxy init control
+ansible-galaxy init nginx
+ansible-galaxy init apache2
+ansible-galaxy init demo_app
+ansible-galaxy init mysql

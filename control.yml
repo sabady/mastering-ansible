@@ -1,8 +1,5 @@
 ---
 - hosts: control
   become: true
-  tasks:
-  - name: install control tools
-    package:
-      name: ['curl', 'python-httplib2']
-      state: present
+  roles:
+    - control

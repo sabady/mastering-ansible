@@ -1,38 +1,15 @@
 ---
 - hosts: webserver
   become: true
-  tasks:
+  roles:
+    - apache2
+    - demo_app
   
   
 
-  - name: copy demo app source
-    copy: src=demo/app/ dest=/var/www/demo mode=0755
-    notify: restart apache2
-
-  - name: copy apache virtual host config
-    copy: src=demo/demo.conf dest=/etc/apache2/sites-available mode=0755
-    notify: restart apache2
-
-  - name: setup python virtualenv
-    pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
-    notify: restart apache2
+  
 
   
-  - name: activate demo site
-    file: src=/etc/apache2/sites-available/demo.conf dest=/etc/apache2/sites-enabled/demo.conf state=link
-    notify: restart apache2
-
-  - name: ensure appXX knows lb01
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.2 line="10.128.0.2 lb01" state=present
-
-  - name: ensure appXX knows app01
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
-
-  - name: ensure appXX knows app02
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
-
-  - name: ensure appXX knows db01
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
 
     
     

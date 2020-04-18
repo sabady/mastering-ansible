@@ -1,40 +1,6 @@
 ---
 - hosts: loadbalancer
   become: true
-  tasks:
-  - name: install nginx
-    apt: name=nginx state=present update_cache=yes
-
-  - name: install tools
-    apt: 
-      name: ['python-httplib2']
-      state: present
-      update_cache: yes
-
-  - name: ensure nginx runs
-    service: name=nginx state=started enabled=yes
-
-  - name: config nginx site
-    template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0644
-    notify: restart nginx
-
-  - name: de-activate default nginx site
-    file: path=/etc/nginx/sites-enabled/default state=absent
-    notify: restart nginx
-
-  - name: activate demo nginx
-    file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
-    notify: restart nginx
-
-  - name: ensure mysql knows app01
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
-
-  - name: ensure mysql knows app02
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
-
-  - name: ensure mysql knows db01
-    lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
-
-  handlers:
-  - name: restart nginx
-    service: name=nginx state=restart
+  roles:
+    - nginx
+  

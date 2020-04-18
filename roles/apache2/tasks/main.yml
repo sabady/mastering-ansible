@@ -1,0 +1,29 @@
+---
+- name: ensure appXX knows lb01
+    lineinfile: dest=/etc/hosts regexp=^10.128.0.2 line="10.128.0.2 lb01" state=present
+
+- name: ensure appXX knows app01
+  lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
+
+- name: ensure appXX knows app02
+  lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
+
+- name: ensure appXX knows db01
+  lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
+
+- name: install apache2 with modules
+  apt: 
+    name: ['apache2', 'libapache2-mod-wsgi']
+    state: present
+    update_cache: yes
+
+- name: ensure mod-wsgi enabled
+  apache2_module: state=present name=wsgi
+  notify: restart apache2
+
+- name: de-activate default apache site
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  notify: restart apache2
+
+- name: ensure apache2 is running
+  service: name=apache2 state=started enabled=yes

@@ -1,0 +1,5 @@
+---
+- name: install control tools
+  package:
+    name: ['curl', 'python-httplib2']
+    state: present

@@ -2,18 +2,8 @@
 - hosts: webserver
   become: true
   tasks:
-  - name: install what is required
-    apt: 
-      name: ['apache2', 'libapache2-mod-wsgi', 'python-pip', 'python-virtualenv', 'python-mysqldb']
-      state: present
-      update_cache: yes
-
-  - name: ensure apache2 is running
-    service: name=apache2 state=started enabled=yes
-
-  - name: ensure mod-wsgi enabled
-    apache2_module: state=present name=wsgi
-    notify: restart apache2
+  
+  
 
   - name: copy demo app source
     copy: src=demo/app/ dest=/var/www/demo mode=0755
@@ -27,29 +17,24 @@
     pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
     notify: restart apache2
 
-  - name: de-activate default apache site
-    file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
-    notify: restart apache2
-
+  
   - name: activate demo site
     file: src=/etc/apache2/sites-available/demo.conf dest=/etc/apache2/sites-enabled/demo.conf state=link
     notify: restart apache2
 
-  - name: ensure mysql knows lb01
+  - name: ensure appXX knows lb01
     lineinfile: dest=/etc/hosts regexp=^10.128.0.2 line="10.128.0.2 lb01" state=present
 
-  - name: ensure mysql knows app01
+  - name: ensure appXX knows app01
     lineinfile: dest=/etc/hosts regexp=^10.128.0.3 line="10.128.0.3 app01" state=present
 
-  - name: ensure mysql knows app02
+  - name: ensure appXX knows app02
     lineinfile: dest=/etc/hosts regexp=^10.128.0.5 line="10.128.0.5 app02" state=present
 
-  - name: ensure mysql knows db01
+  - name: ensure appXX knows db01
     lineinfile: dest=/etc/hosts regexp=^10.128.0.4 line="10.128.0.4 db01" state=present
 
-  handlers:
-    - name: restart apache2
-      service: name=apache2 state=restarted
+    
     
 
 

@@ -20,3 +20,6 @@ ansible-galaxy init nginx
 ansible-galaxy init apache2
 ansible-galaxy init demo_app
 ansible-galaxy init mysql
+
+# limit execution
+ansible-playbook site.yml --limit app01

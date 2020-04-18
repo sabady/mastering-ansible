@@ -4,5 +4,5 @@
   tasks:
   - name: install control tools
     package:
-      name: ['curl']
+      name: ['curl', 'python-httplib2']
       state: present
